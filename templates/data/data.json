@@ -1,5 +1,6 @@
 {
     "weather": "Sunny",
+    "temperature": "25°C",
     "date": "2024-08-30",
     "dollar_rate": "5.25",
     "dollar_state":"increase",
