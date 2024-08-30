@@ -1,0 +1,14 @@
+/* Adjust the height of the sidebar */
+#sidebar {
+    height: 100vh;
+}
+
+/* Customize the navbar */
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+/* Add some spacing between widgets */
+.card {
+    margin-top: 20px;
+}

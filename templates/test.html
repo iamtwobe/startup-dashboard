@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lian's Dashboard</title>
+    </head>
+
+    <body>
+
+        <h1>Página 2</h1>
+        <button id="btnIndex">Página inicial</button>
+
+        <h1>outro botão</h1>
+        <button id="btnTeste">teste</button>
+        
+
+    </body>
+</html>
+
+<script>
+    document.getElementById('btnTeste').addEventListener('click', function() {
+        // Chamar a função Python
+        pywebview.api.dashboard()
+    });
+    document.getElementById('btnIndex').addEventListener('click', function() {
+        // Chamar a função Python
+        pywebview.api.bot_btn()
+    });
+</script>
