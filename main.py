@@ -1,4 +1,6 @@
 from src.utils.notifier import phone_notify
+from src.api.exchange_api import exchange_currencies, compare_exchange
+from src.utils.get_date import get_date
 import webview
 import time
 import json
@@ -36,22 +38,52 @@ def start_interface(debug=False):
     webview.start(api.start_program, debug=debug)
 
 
-def start_structure(notify=True):
+def start_structure(notify=False):
     """Starts all functionalities of the program
     such as the APIs, the data, day and weather
     then wraps them together"""
-    ...
+    
+    today, yesterday, weekday = get_date()
+    
+    currencies = exchange_currencies(date_t=today, date_y=yesterday)
+    dollar_t, dollar_y = currencies.get('dollar_rate')[:4], currencies.get('dollar_yesterday')[:4]
+    euro_t, euro_y = currencies.get('euro_rate')[:4], currencies.get('euro_yesterday')[:4]
 
-    # match case for dollar and euro state (for increase/decrease/stable)
-    # match case for weather for each possible state
+    dollar_state = compare_exchange(
+        currency_today=dollar_t,
+        currency_yesterday=dollar_y
+    )
+    euro_state = compare_exchange(
+        currency_today=euro_t,
+        currency_yesterday=euro_y
+    )
+
+
+    with open('templates/data/data.json', 'w') as e:
+        json.dump(
+        {
+            "weather": "Sunny",
+            "temperature": "25°C",
+            "date": f"{today[8:]}/{today[5:7]}",
+            "weekday": weekday,
+            "dollar_rate": str(dollar_t).replace('.', ','),
+            "dollar_state": dollar_state,
+            "euro_rate": str(euro_t).replace('.', ','),
+            "euro_state": euro_state
+        },
+        e, indent=4
+        )
+
+
     if notify:
         phone_notify(
-            date="30/08",
+            date=f"{today[8:]}/{today[5:7]}",
             weather="ensolarado", temperature="25ºC",
-            dollar=5.25, dollar_state="decrease",
-            euro=6.25, euro_state="decrease"
+            dollar=dollar_t, dollar_state=f"{dollar_state}",
+            euro=euro_t, euro_state=f"{euro_state}",
+            debug=True
         )
 
 if __name__ == '__main__':
-    start_structure()
-    start_interface(debug=False)
+    start_structure(notify=False)
+    #start_interface(debug=False)
