@@ -46,6 +46,8 @@ function initialize_dashboard() {
             }
             document.getElementById('dollar').innerHTML = `<p id="dollar" class="card-text">${parsedData.dollar_rate || "N/A"} <img src="${dollar_state_img}" alt=""></p>`
             document.getElementById('weather').textContent = parsedData.weather || "N/A";
+            document.getElementById('weather_img').src = parsedData.weather_img;
+            document.getElementById('temperature').textContent = parsedData.temperature || "N/A";
             document.getElementById('date').textContent = parsedData.date || "N/A";
             document.getElementById('euro').innerHTML = `<p id="euro" class="card-text">${parsedData.euro_rate || "N/A"} <img src="${eur_state_img}" alt=""></p>`;
         })

@@ -1,16 +1,18 @@
 from src.utils.notifier import phone_notify
 from src.api.exchange_api import exchange_currencies, compare_exchange
 from src.utils.get_date import get_date
+from src.api.weather_api import get_weather
 import webview
 import time
 import json
 
 
-def start_interface(debug=False):
+def start_interface(window_name, debug=False):
     dashboard_page = 'templates/dashboard.html'
     loading_page = 'templates/loading_page/index.html'
     index_page = 'templates/index.html'
     test_page = 'templates/test.html'
+
     class API:
         def start_program(self):
             window.load_url(loading_page)
@@ -28,7 +30,7 @@ def start_interface(debug=False):
 
     api = API()
 
-    window = webview.create_window("Lian's Dashboard", 'templates/', js_api=api)
+    window = webview.create_window(window_name, 'templates/', js_api=api)
     webview.settings = {
         'ALLOW_DOWNLOADS': False,
         'ALLOW_FILE_URLS': True,
@@ -58,32 +60,33 @@ def start_structure(notify=False):
         currency_yesterday=euro_y
     )
 
+    weather_condition, temperature, weather_img = get_weather()
 
-    with open('templates/data/data.json', 'w') as e:
-        json.dump(
-        {
-            "weather": "Sunny",
-            "temperature": "25°C",
+    data = {
+            "weather": weather_condition,
+            "weather_img": weather_img,
+            "temperature": f"{temperature}ºC",
             "date": f"{today[8:]}/{today[5:7]}",
             "weekday": weekday,
             "dollar_rate": str(dollar_t).replace('.', ','),
             "dollar_state": dollar_state,
             "euro_rate": str(euro_t).replace('.', ','),
             "euro_state": euro_state
-        },
-        e, indent=4
-        )
-
+        }
 
     if notify:
         phone_notify(
-            date=f"{today[8:]}/{today[5:7]}",
-            weather="ensolarado", temperature="25ºC",
-            dollar=dollar_t, dollar_state=f"{dollar_state}",
-            euro=euro_t, euro_state=f"{euro_state}",
+            date=data["date"],
+            weather=data["weather"], temperature=data["temperature"],
+            dollar=data["dollar_rate"], dollar_state=data["dollar_state"],
+            euro=data["euro_rate"], euro_state=data["euro_state"],
             debug=True
         )
+    
+    with open('templates/data/data.json', 'w') as f:
+        json.dump(data, f, indent=4)
+        f.close()
 
 if __name__ == '__main__':
-    start_structure(notify=False)
-    #start_interface(debug=False)
+    #start_structure(notify=False)
+    start_interface("Lian's Dashboard", debug=False)
