@@ -1,4 +1,4 @@
-function initialize() {
+function initialize_dashboard() {
 
     // URL do arquivo JSON
     const jsonUrl = 'data/data.json'; // Atualize o caminho conforme necessário
