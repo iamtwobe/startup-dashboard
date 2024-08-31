@@ -14,13 +14,14 @@ def get_date():
         today = _date.strftime("%Y-%m-%d")
         yesterday = (_date - timedelta(days=1)).strftime("%Y-%m-%d")
         weekday = _date.weekday()
+        daytime = _date.strftime("%H")
 
-        return today, yesterday, weekdays[weekday]
+        return today, yesterday, weekdays[weekday], daytime
     except Exception as e:
         print(e)
         return None
 
 if __name__ == "__main__":
     print(
-        get_date()[0][5:7]
+        get_date()
     )

@@ -10,7 +10,7 @@ def data_wrapper(notify=False, debug_notify=False):
     such as the APIs, the data, day and weather
     then wraps them together"""
     
-    today, yesterday, weekday = get_date()
+    today, yesterday, weekday, daytime = get_date()
     
     currencies = exchange_currencies(date_t=today, date_y=yesterday)
     dollar_t, dollar_y = currencies.get('dollar_rate')[:4], currencies.get('dollar_yesterday')[:4]
@@ -41,7 +41,7 @@ def data_wrapper(notify=False, debug_notify=False):
 
     if notify:
         phone_notify(
-            date=data["date"],
+            date=data["date"], daytime=int(daytime),
             weather=data["weather"], temperature=data["temperature"],
             dollar=data["dollar_rate"], dollar_state=data["dollar_state"],
             euro=data["euro_rate"], euro_state=data["euro_state"],
