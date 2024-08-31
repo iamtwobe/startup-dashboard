@@ -12,10 +12,6 @@ function initialize_dashboard() {
             return response.json();
         })
         .then(parsedData => {
-            switch(parsedData.weather){
-                case "Sunny":
-                    ''
-            }
             switch(parsedData.dollar_state){
                 case "increase":
                     var dollar_state_img = ""
@@ -24,9 +20,6 @@ function initialize_dashboard() {
                     var dollar_state_img = ""
                     break;
                 case "stable":
-                    var dollar_state_img = ""
-                    break;
-                default:
                     var dollar_state_img = ""
                     break;
             }
@@ -38,9 +31,6 @@ function initialize_dashboard() {
                     var eur_state_img = ""
                     break;
                 case "stable":
-                    var eur_state_img = ""
-                    break;
-                default:
                     var eur_state_img = ""
                     break;
             }
