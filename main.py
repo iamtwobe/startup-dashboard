@@ -34,4 +34,4 @@ def start_interface(window_name, debug=False):
 
 if __name__ == '__main__':
     data_wrapper(notify=True, debug_notify=True)
-    #start_interface("Lian's Dashboard", debug=False)
+    start_interface("Lian's Dashboard", debug=False)

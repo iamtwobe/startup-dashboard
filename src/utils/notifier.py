@@ -1,15 +1,12 @@
 import subprocess
 
 def phone_notify(date, daytime, weather, temperature, dollar, dollar_state, euro, euro_state, debug=False):
-    # match case for dollar and euro state (for increase/decrease/stable)
-    # match case for weather for each possible state
-    # match case do horário também. dia/tarde/noite
     try:
         daytime = 'Bom dia' if daytime >= 5 and daytime < 12 else 'Boa tarde' if daytime >= 12 and daytime < 18 else 'Boa noite'
         notification_name = f'{daytime} Lian ♥ ! Hoje é dia {date}'
         notification_title = f'Aqui estão as informações do dia'
         notification_body = (
-            f'\nO tempo está {weather} ({temperature})' +
+            f'\nO tempo está com {temperature} ({weather})' +
             f'\nO dólar {'caiu para' if dollar_state == 'decrease' else 'subiu para' if dollar_state == 'increase' else 'está em'} {str(dollar).replace('.', ',')}' +
             f' e o euro {'caiu para' if euro_state == 'decrease' else 'subiu para' if euro_state == 'increase' else 'está em'} {str(euro).replace('.', ',')}' +
             f'\nTenha um ótimo dia!'
@@ -19,7 +16,7 @@ def phone_notify(date, daytime, weather, temperature, dollar, dollar_state, euro
         subprocess.run(command, shell=True, executable="/bin/bash")
 
         if debug:
-            print(notification_name, '\n' + notification_title + ':', notification_body)
+            print(notification_name + '\n' + notification_title + ':' + notification_body)
 
     except Exception as e:
         print(e)
