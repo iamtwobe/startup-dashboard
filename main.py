@@ -22,7 +22,7 @@ def start_interface(window_name, debug=False):
 
     api = API()
 
-    window = webview.create_window(window_name, 'templates/', js_api=api)
+    window = webview.create_window(window_name, 'templates/', js_api=api, width=880, height=650, resizable=False)
     webview.settings = {
         'ALLOW_DOWNLOADS': False,
         'ALLOW_FILE_URLS': True,
@@ -33,5 +33,5 @@ def start_interface(window_name, debug=False):
 
 
 if __name__ == '__main__':
-    data_wrapper(notify=True, debug_notify=True)
+    #data_wrapper(notify=True, debug_notify=True)
     start_interface("Lian's Dashboard", debug=False)
