@@ -14,31 +14,33 @@ function initialize_dashboard() {
         .then(parsedData => {
             switch(parsedData.dollar_state){
                 case "increase":
-                    var dollar_state_img = ""
+                    var usd_state_img = "assets/icons/increase_icon.png"
                     break;
                 case "decrease":
-                    var dollar_state_img = ""
+                    var usd_state_img = "assets/icons/decrease_icon.png"
                     break;
                 case "stable":
-                    var dollar_state_img = ""
+                    var usd_state_img = "assets/icons/decrease_icon.png"
                     break;
             }
             switch(parsedData.euro_state){
                 case "increase":
-                    var eur_state_img = ""
+                    var eur_state_img = "assets/icons/increase_icon.png"
                     break;
                 case "decrease":
-                    var eur_state_img = ""
+                    var eur_state_img = "assets/icons/decrease_icon.png"
                     break;
                 case "stable":
-                    var eur_state_img = ""
+                    var eur_state_img = "assets/icons/decrease_icon.png"
                     break;
             }
-            document.getElementById('dollar').innerHTML = `<p id="dollar" class="card-text">${parsedData.dollar_rate || "N/A"} <img src="${dollar_state_img}" alt=""></p>`
             document.getElementById('weather').textContent = parsedData.weather || "N/A";
             document.getElementById('weather_img').src = parsedData.weather_img;
             document.getElementById('temperature').textContent = parsedData.temperature || "N/A";
             document.getElementById('date').textContent = parsedData.date || "N/A";
-            document.getElementById('euro').innerHTML = `<p id="euro" class="card-text">${parsedData.euro_rate || "N/A"} <img src="${eur_state_img}" alt=""></p>`;
+            document.getElementById('dollar').innerHTML = `<p id="dollar" class="card-text">R$ ${parsedData.dollar_rate || "N/A"}</p>`
+            document.getElementById('usd_title').innerHTML = `<h5 id="usd_title" class="card-title"> Dollar </h5><img src="${usd_state_img}" height="56" width="60">`
+            document.getElementById('euro').innerHTML = `<p id="euro" class="card-text">R$ ${parsedData.euro_rate || "N/A"}</p>`;
+            document.getElementById('euro_title').innerHTML = `<h5 id="euro_title" class="card-title"> Euro </h5><img src="${eur_state_img}" height="56" width="60">`
         })
 }
