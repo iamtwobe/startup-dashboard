@@ -1,4 +1,5 @@
 import subprocess
+import time
 
 def phone_notify(date, daytime, weather, temperature, dollar, dollar_state, euro, euro_state, debug=False):
     try:
@@ -11,6 +12,15 @@ def phone_notify(date, daytime, weather, temperature, dollar, dollar_state, euro
             f' e o euro {'caiu para' if euro_state == 'decrease' else 'subiu para' if euro_state == 'increase' else 'está em'} {str(euro).replace('.', ',')}' +
             f'\nTenha um ótimo dia!'
         )
+
+        while True:
+            device_check = "~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/service/daemon.js -l"
+            response = subprocess.run(device_check, shell=True, executable="/bin/bash", capture_output=True, text=True)
+            if response.stdout != '' and not 'WARNING' in response.stdout:
+                break
+            else:
+                time.sleep(1)
+                continue
 
         command = f'~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/service/daemon.js -d 45c542b0_25bf_43ec_8d48_1f31785b0649 --notification "{notification_title}" --notification-body "{notification_body}" --notification-appname "{notification_name}"'
         subprocess.run(command, shell=True, executable="/bin/bash")
